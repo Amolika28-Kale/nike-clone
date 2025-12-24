@@ -11,6 +11,7 @@ const Navbar = () => {
     const [navState, setNavState] = useState(false);
     const dispatch = useDispatch();
     const totalQTY = useSelector(selectTotalQTY);
+const user = JSON.parse(localStorage.getItem("user"));
 
     const onCartToggle = () => {
         dispatch(setOpenCart({
@@ -38,13 +39,19 @@ return (
         !navState ? 'absolute top-7 left-0 right-0 opacity-100 z-50' : 'fixed top-0 left-0 right-0 h-[9vh] flex items-center justify-center opacity-100 z-[200] blur-effect-theme'
       }>
         <nav className='flex items-center justify-between nike-container'>
-            <div className='flex items-center'>
-                <img
-                    src={logo}
-                    alt="logo/img"
-                    className={`w-16 h-auto ${navState && "filter brightness-0"}`}
-                />
-            </div>
+           <div className='flex items-center'>
+<div className='flex items-center'>
+  <Link to="/#hero">
+    <img
+      src={logo}
+      alt="logo/img"
+      className={`w-16 h-auto cursor-pointer ${navState && "filter brightness-0"}`}
+    />
+  </Link>
+</div>
+
+</div>
+
             <ul className='flex items-center justify-center gap-2'>
                 <li className='grid items-center'>
                     <MagnifyingGlassIcon className={`icon-style ${navState && "text-slate-900 transition-all duration-300"}`} />
@@ -53,11 +60,10 @@ return (
                     <HeartIcon className={`icon-style ${navState && "text-slate-900 transition-all duration-300"}`} />
                 </li>
                 <li className='grid items-center'>
-  <Link to="/login">
-    <UserIcon
-      className={`icon-style ${navState && "text-slate-900 transition-all duration-300"}`}
-    />
-  </Link>
+ <Link to={user ? "/profile" : "/login"}>
+  <UserIcon className="icon-style" />
+</Link>
+
 </li>
 
                 <li className='grid items-center'>

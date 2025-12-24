@@ -80,19 +80,22 @@ const navigate = useNavigate();
   type="button"
   className="button-theme bg-theme-cart text-white"
   onClick={() => {
-    const user = JSON.parse(localStorage.getItem("user"));
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
 
-    dispatch(setCloseCart({ cartState: false }));
-
-    if (!user) {
+    if (!isLoggedIn) {
+      alert("Please login to continue checkout");
       navigate("/login");
-    } else {
-      setShowPayment(true);
+      return;
     }
+
+    // user logged in
+    dispatch(setCloseCart({ cartState: false }));
+    setShowPayment(true);
   }}
 >
   Check Out
 </button>
+
 
 
               </div>
