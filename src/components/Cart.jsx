@@ -12,6 +12,10 @@ import {
 import CartCount from "./cart/CartCount";
 import CartEmpty from "./cart/CartEmpty";
 import CartItem from "./cart/CartItem";
+import Payment from "./Payment";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -19,7 +23,9 @@ const Cart = () => {
   const cartItems = useSelector(selectCartItems);
   const totalAmount = useSelector(selectTotalAmount);
   const totalQTY = useSelector(selectTotalQTY);
-  
+  const [showPayment, setShowPayment] = useState(false);
+const navigate = useNavigate();
+
   // console.log(cartItems)
 
   useEffect(() => {
@@ -39,6 +45,7 @@ const Cart = () => {
   }
   
   return (
+    
     <>
       <div
         className={`fixed top-0 left-0 right-0 bottom-0 blur-effect-theme duration-500 w-full h-screen opacity-100 z-[250] ${
@@ -69,14 +76,39 @@ const Cart = () => {
               </div>
               <div className="grid items-center gap-2">
                 <p className="text-sm font-medium text-center">Taxes and Shipping Will Calculate At Shipping</p>
-                <button type="button" className="button-theme bg-theme-cart text-white">Check Out</button>
+<button
+  type="button"
+  className="button-theme bg-theme-cart text-white"
+  onClick={() => {
+    const user = JSON.parse(localStorage.getItem("user"));
+
+    dispatch(setCloseCart({ cartState: false }));
+
+    if (!user) {
+      navigate("/login");
+    } else {
+      setShowPayment(true);
+    }
+  }}
+>
+  Check Out
+</button>
+
+
               </div>
             </div>
 
           </div>}
         </div>
       </div>
+{showPayment && (
+  <Payment
+    amount={totalAmount}
+    onClose={() => setShowPayment(false)}
+  />
+)}
     </>
+    
   );
 };
 

@@ -4,6 +4,8 @@ import { selectTotalQTY, setOpenCart } from '../app/CartSlice.js';
 
 import { HeartIcon, MagnifyingGlassIcon, ShoppingBagIcon } from '@heroicons/react/24/outline'
 import logo from '../assets/logo.png';
+import { UserIcon } from '@heroicons/react/24/outline';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
     const [navState, setNavState] = useState(false);
@@ -50,6 +52,14 @@ return (
                 <li className='grid items-center'>
                     <HeartIcon className={`icon-style ${navState && "text-slate-900 transition-all duration-300"}`} />
                 </li>
+                <li className='grid items-center'>
+  <Link to="/login">
+    <UserIcon
+      className={`icon-style ${navState && "text-slate-900 transition-all duration-300"}`}
+    />
+  </Link>
+</li>
+
                 <li className='grid items-center'>
                     <button type='button' onClick={onCartToggle} className='border-none outline-none active:scale-110 transition-all duration-300 relative'>
                         <ShoppingBagIcon className={`icon-style ${navState && "text-slate-900 transition-all duration-300"}`} />
